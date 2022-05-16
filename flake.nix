@@ -23,6 +23,7 @@ nix = {
           permitRootLogin = "no";
           challengeResponseAuthentication = false;
         };
+    };
 
     environment = {
         variables = {
