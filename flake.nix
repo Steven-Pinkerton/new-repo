@@ -60,4 +60,4 @@ nix = {
     programs.bash.shellInit = ''
     TERM=xterm
     '';
-    }; 
+    }
