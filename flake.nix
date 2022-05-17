@@ -2,11 +2,12 @@
   description = "A Remote Machine Flake";
 
 inputs = {
-  nixpkgs.url = "github.com/NixOS/nixpkgs";
+  nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11";
   };
 
   outputs = { self, nixpkgs, ...}: {
-  nixosConfigurations = {
+
+  nixosConfigurations.container = {
     mySystem = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [ ./configuration.nix ];
