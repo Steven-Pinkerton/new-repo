@@ -1,4 +1,4 @@
-{{
+{
   description = "A Remote Machine Flake";
 
   inputs = {
