@@ -5,12 +5,14 @@ inputs = {
   nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11";
   };
 
-  outputs = { self, nixpkgs, ...}: {
+  outputs = { self, nixpkgs, ...}: 
+  {
 
-  nixosConfigurations.container = {
+  nixosConfigurations.remote-machine = {
     mySystem = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
-      modules = [ ./configuration.nix ];
+      modules = 
+      [ import ./configuration.nix ];
     };
   };
 };
