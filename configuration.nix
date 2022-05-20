@@ -8,10 +8,6 @@
         '';
   };
 
-  imports = [ 
-    ./hardware-configuration.nix
-  ];
-
   system =
   {
     stateVersion = "21.11";
