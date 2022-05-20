@@ -8,6 +8,10 @@
         '';
   };
 
+   imports = [
+     ./hardware-configuration.nix
+   ];
+
   system =
   {
     stateVersion = "21.11";
@@ -15,6 +19,7 @@
 
   time.timeZone = "Europe/Amsterdam";
   i18n.defaultLocale = "en_GB.UTF-8";
+
 
   services =
   {
