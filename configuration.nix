@@ -67,7 +67,7 @@
   users.users.steven =
   {
     isNormalUser = true;
-    initialHashedPassword = "$6$2IMeBUr3ehYkkF9p$popywjgNmIsi1pSdE1AtHH29mHjUVPAgJwsxRoAoMt0bEoovw.A5P7Y2wo0xO611JQizf0DCMV9UWIXpGdyxt/";
+    initialHashedPassword = "test";
     extraGroups = [ "wheel" ];
   };
 
