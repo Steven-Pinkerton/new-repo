@@ -14,9 +14,8 @@
          
          modules = [ 
            (import 
-           ./configuration.nix,
-           <nixpkgs/nixos/modules/virtualisation/openstack-config.nix>
-           ) 
+           ./configuration.nix)
+           <nixpkgs/nixos/modules/virtualisation/openstack-config.nix> 
            {
              _module.args.nixinate =  {
                host = "193.16.42.17";
