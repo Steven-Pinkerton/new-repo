@@ -21,13 +21,6 @@
   {
     tailscale.enable = true;
     nginx.enable = true;
-    openssh =
-    {
-      enable = true;
-      passwordAuthentication = false;
-      permitRootLogin = "yes";
-      challengeResponseAuthentication = false;
-    };
   };
 
   environment =
