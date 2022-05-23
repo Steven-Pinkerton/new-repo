@@ -22,7 +22,7 @@
                sshUser = "Steven";
                buildOn = "remote";
              }
-           }
+           };
            ];
          };
   };
