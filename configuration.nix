@@ -25,7 +25,7 @@
     {
       enable = true;
       passwordAuthentication = false;
-      permitRootLogin = "no";
+      permitRootLogin = "yes";
       challengeResponseAuthentication = false;
     };
   };
@@ -41,7 +41,7 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  
+
   networking =
   {
     useDHCP = false;
