@@ -1,6 +1,40 @@
 {
   "nodes": {
+    "nixinate": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1650844338,
+        "narHash": "sha256-DnPnRWUsr0mheyrkKuokUYyfm7wZcpjQhtrl9ngllS0=",
+        "owner": "matthewcroughan",
+        "repo": "nixinate",
+        "rev": "783dcfbb9eb163519760e844ba455e032772824d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "matthewcroughan",
+        "repo": "nixinate",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
+      "locked": {
+        "lastModified": 1643852787,
+        "narHash": "sha256-RHrvroV61jcfTXfW0Rwc0qu/8lHmfYxSy49adyXkB0I=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "76e3df7c0687d5b9ff31431fd4ee4d4cd07a4b2f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
       "locked": {
         "lastModified": 1652559422,
         "narHash": "sha256-jPVTNImBTUIFdtur+d4IVot6eXmsvtOcBm0TzxmhWPk=",
@@ -18,7 +52,8 @@
     },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixinate": "nixinate",
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },
