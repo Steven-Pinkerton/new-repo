@@ -22,8 +22,8 @@
                sshUser = "Steven";
                buildOn = "remote";
              }
-           };
            ]
          };
   };
+}
 }
