@@ -13,7 +13,10 @@
          system = "x86_64-linux";
          
          modules = [ 
-           (import ./configuration.nix) 
+           (import 
+           ./configuration.nix,
+           <nixpkgs/nixos/modules/virtualisation/openstack-config.nix>
+           ) 
            {
              _module.args.nixinate =  {
                host = "193.16.42.17";
