@@ -22,9 +22,9 @@
                host = "193.16.42.17";
                sshUser = "Steven";
                buildOn = "remote";
-             }
+             };
            }
          ];
+      };
   };
-};
 }
