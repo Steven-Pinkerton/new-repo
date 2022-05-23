@@ -8,7 +8,6 @@
 
   outputs = { self, nixpkgs, nixinate }:
   {
-      legacyPackages = nixpkgs.legacyPackages.x86_64-linux;
       apps = nixinate.nixinate.x86_64-linux self;
       nixosConfigurations.remote-machine = nixpkgs.lib.nixosSystem {
          system = "x86_64-linux";
@@ -16,7 +15,7 @@
          modules = [ 
            (import 
            ./configuration.nix)
-           <nixpkgs/nixos/modules/virtualisation/openstack-config.nix> 
+           "${nixpkgs}/nixos/modules/virtualisation/openstack-config.nix"
          
            {
              _module.args.nixinate =  {
