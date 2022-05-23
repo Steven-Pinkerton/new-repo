@@ -20,7 +20,7 @@
            {
              _module.args.nixinate =  {
                host = "193.16.42.17";
-               sshUser = "Steven";
+               sshUser = "root";
                buildOn = "remote";
              };
            }
