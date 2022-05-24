@@ -5,16 +5,15 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1653338281,
-        "narHash": "sha256-IKoxpNV1RqC4dCE0FN7xYpowz5d1OEtDVHc8uLnDaT4=",
+        "lastModified": 1653365516,
+        "narHash": "sha256-fsx4dP9uU8ls+TnZq/LfwGf8k1oUNwEmtCsRzwIDjUU=",
         "owner": "matthewcroughan",
         "repo": "nixinate",
-        "rev": "fffd791af577a1f8d906131c43af60e9c41af9e8",
+        "rev": "2a660be7790572f42afdadbd50641e8a53d7b644",
         "type": "github"
       },
       "original": {
         "owner": "matthewcroughan",
-        "ref": "mc/hermetic-remote",
         "repo": "nixinate",
         "type": "github"
       }
