@@ -35,12 +35,6 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  networking =
-  {
-    useDHCP = false;
-    interfaces.ens33.useDHCP = true;
-  };
-
   services.openssh.enable = true;
 
   console =
