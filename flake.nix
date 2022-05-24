@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixinate.url = "github:matthewcroughan/nixinate/mc/hermetic-remote";
+    nixinate.url = "github:matthewcroughan/nixinate";
   };
 
   outputs = { self, nixpkgs, nixinate }:
