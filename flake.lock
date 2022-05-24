@@ -5,11 +5,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1653331129,
-        "narHash": "sha256-E3TRVVCU0IQwiebsiBJg0OSrnkruhYrHDWQRb0W8QG4=",
+        "lastModified": 1653338281,
+        "narHash": "sha256-IKoxpNV1RqC4dCE0FN7xYpowz5d1OEtDVHc8uLnDaT4=",
         "owner": "matthewcroughan",
         "repo": "nixinate",
-        "rev": "5944f8721942d489477472ad60ac69357bfe0a1c",
+        "rev": "fffd791af577a1f8d906131c43af60e9c41af9e8",
         "type": "github"
       },
       "original": {
