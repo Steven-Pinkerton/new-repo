@@ -20,6 +20,49 @@
     {
       tailscale.enable = true;
 
+      vouch-proxy =
+         let vouchConfig = {
+                    vouch = {
+                        domains = "dirunum.platonic.systems";
+                        whiteList = "*@platonic.systems";
+                        cookie.domain = "dirunum.platonic.systems";
+                };
+              };
+              
+                oauth = rec {
+                  provider = "google";
+                  client_id = "914818019586-2l79nadchde09crb29u5lkdq7q5h1pa7.apps.googleusercontent.com";
+                  client_secret = "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";
+                  callback_url = "https://vouch.dirunum.platonic.systems:9090/auth";
+                  preferredDomain = "https://dirunum.platonic.systems";
+              };
+          in
+            { 
+              description = "Vouch-prxy";
+              after = [ "network.target" ];
+              wantedBy = [ "multi-user.target" ];
+              serviceConfig = {
+                        ExecStart = 
+                      ''
+                      ${pkgs.vouch-proxy}/bin/vouch-proxy \
+                      -config ${(pkgs.formats.yaml {}).generate "config.yml" vouchConfig}
+                      '';
+                    Restart = "on-failure";
+                    RestartSec = 5;
+                    WorkingDirectory = "/var/lib/vouch-proxy";
+                    RuntimeDirectory = "vouch-proxy";
+
+                    User = "vouch-proxy";
+                    Group = "vouch-proxy";
+                    SartLimitBurst = 3;
+                };
+              }
+              users.users.vouch-proxy = {
+                isSystemUser = true;
+                group = "vouch-proxy";
+        };
+        users.groups.vouch-proxy = { };
+
       nginx = {
         enable = true;
       
@@ -46,45 +89,7 @@
             };
         };
 
-  vouchConfig = {
-              vouch = {
-                  domains = "dirunum.platonic.systems";
-                  whiteList = "*@platonic.systems";
-                  cookie.domain = "dirunum.platonic.systems";
-          };
-        };
-        
-          oauth = rec {
-            provider = "google";
-            client_id = "914818019586-2l79nadchde09crb29u5lkdq7q5h1pa7.apps.googleusercontent.com";
-            client_secret = "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";
-            callback_url = "https://vouch.dirunum.platonic.systems:9090/auth";
-            preferredDomain = "https://dirunum.platonic.systems";
-        };
 
-
-    serviceConfig = {
-                  ExecStart = 
-                ''
-                ${pkgs.vouch-proxy}/bin/vouch-proxy \
-                -config ${(pkgs.formats.yaml {}).generate "config.yml" vouchConfig}
-                '';
-            Restart = "on-failure";
-            RestartSec = 5;
-            WorkingDirectory = "/var/lib/vouch-proxy";
-              RuntimeDirectory = "vouch-proxy";
-
-            User = "vouch-proxy";
-            Group = "vouch-proxy";
-            SartLimitBurst = 3;
-          };
-
-          users.users.vouch-proxy = {
-          isSystemUser = true;
-          group = "vouch-proxy";
-  };
-  users.groups.vouch-proxy = { };
-};
 
   environment =
   {
