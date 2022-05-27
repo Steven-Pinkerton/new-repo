@@ -68,7 +68,7 @@
                   ExecStart = 
                 ''
                 ${pkgs.vouch-proxy}/bin/vouch-proxy \
-                -config ${(ppkgs.formats.yaml {}).generate "config.yml" vouchConfig}
+                -config ${(pkgs.formats.yaml {}).generate "config.yml" vouchConfig}
                 '';
             Restart = "on-failure";
             RestartSec = 5;
