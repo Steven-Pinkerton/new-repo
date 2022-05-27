@@ -45,7 +45,6 @@
             };
             };
         };
-    };
 
   vouchConfig = {
               vouch = {
@@ -85,6 +84,7 @@
           group = "vouch-proxy";
   };
   users.groups.vouch-proxy = { };
+};
 
   environment =
   {
