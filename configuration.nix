@@ -38,7 +38,7 @@
             };
             
             #This may go in the extra-config we will ask john.
-            error_page.404 = "@error401";
+            error_page."404" = "@error401";
 
             location."@error401" = {
                 return 302 = "https://vouch.dirunum.platonic.systems:9090/login?url=$scheme://$http_host$request_uri&lasso-failcount=$auth_resp_failcount&X-Vouch-Token=$auth_resp_jwt&error=$auth_resp_err;"
