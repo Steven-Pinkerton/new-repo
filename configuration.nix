@@ -62,7 +62,7 @@
                 isSystemUser = true;
                 group = "vouch-proxy";
         };
-        users.groups.vouch-proxy = { };
+  
 
       nginx = {
         enable = true;
