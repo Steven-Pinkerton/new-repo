@@ -56,7 +56,8 @@
                     Group = "vouch-proxy";
                     SartLimitBurst = 3;
                 };
-              }
+              };
+              
               users.users.vouch-proxy = {
                 isSystemUser = true;
                 group = "vouch-proxy";
@@ -88,8 +89,6 @@
             };
             };
         };
-
-
 
   environment =
   {
