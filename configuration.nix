@@ -34,7 +34,8 @@
                     #auth_request_set $auth_resp_jwt $upstream_http_x_vouch_jwt;
                     #auth_request_set $auth_resp_err $upstream_http_x_vouch_err;
                     #auth_request_set $auth_resp_failcount$upstream_http_x_vouch_failcount;
-            ''};
+            '';
+            };
             
             #This may go in the extra-config we will ask john.
             error_page 404 = "@error401";
