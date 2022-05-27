@@ -57,7 +57,7 @@
                     SartLimitBurst = 3;
                 };
               };
-              
+
               users.users.vouch-proxy = {
                 isSystemUser = true;
                 group = "vouch-proxy";
@@ -129,4 +129,5 @@
      ''
     TERM=xterm
      '';
-}
+
+};
