@@ -42,7 +42,6 @@
             location."@error401" = {
                 return 302 = "https://vouch.dirunum.platonic.systems:9090/login?url=$scheme://$http_host$request_uri&lasso-failcount=$auth_resp_failcount&X-Vouch-Token=$auth_resp_jwt&error=$auth_resp_err;"
             };
-
             };
         };
     };
@@ -50,7 +49,7 @@
   vouchConfig = {
               vouch = {
                   domains = "dirunum.platonic.systems";
-                  whiteList = "wildcard@platonic.systems";
+                  whiteList = "*@platonic.systems";
                   cookie.domain = "dirunum.platonic.systems";
           }
         }
@@ -70,7 +69,7 @@
                 ${pkgs.vouch-proxy}/bin/vouch-proxy \
                 -config ${{ppkgs.formats.yaml {}).generate "config.yml" vouchConfig}
                 '';
-              Restart = "on-failure";
+            Restart = "on-failure";
             RestartSec = 5;
             WorkingDirectory = "/var/lib/vouch-proxy";
               RuntimeDirectory = "vouch-proxy";
@@ -80,7 +79,11 @@
             SartLimitBurst = 3;
           };
 
-
+          users.users.vouch-proxy = {
+          isSystemUser = true;
+          group = "vouch-proxy";
+  };
+  users.groups.vouch-proxy = { };
 
   environment =
   {
