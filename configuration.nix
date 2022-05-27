@@ -53,7 +53,7 @@
                   whiteList = "*@platonic.systems";
                   cookie.domain = "dirunum.platonic.systems";
           }
-        }
+        };
         
           oauth = rec {
             provider = "google";
