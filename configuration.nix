@@ -16,12 +16,71 @@
   time.timeZone = "Europe/Amsterdam";
   i18n.defaultLocale = "en_GB.UTF-8";
 
+    services =
+    {
+      tailscale.enable = true;
 
-  services =
-  {
-    tailscale.enable = true;
-    nginx.enable = true;
-  };
+      nginx = {
+        enable = true;
+      
+        virtualHosts."dirunum.platonic.systems" = {
+            auth_request = "/validate";
+
+            location."/validate" = {
+                proxyPass = "http://vouch.dirunum.platonic.systems:9090;";
+                extraConfig = ''
+                    proxy_set_request_body off;
+                    auth_request_set $auth_resp_x_vouch_user $upstream_http_x_vouch_user;
+                    #auth_request_set $auth_resp_jwt $upstream_http_x_vouch_jwt;
+                    #auth_request_set $auth_resp_err $upstream_http_x_vouch_err;
+                    #auth_request_set $auth_resp_failcount$upstream_http_x_vouch_failcount;
+            ''};
+            
+            #This may go in the extra-config we will ask john.
+            error_page 404 = "@error401";
+
+            location."@error401" = {
+                return 302 = "https://vouch.dirunum.platonic.systems:9090/login?url=$scheme://$http_host$request_uri&lasso-failcount=$auth_resp_failcount&X-Vouch-Token=$auth_resp_jwt&error=$auth_resp_err;"
+            };
+
+            };
+        };
+    };
+
+  vouchConfig = {
+              vouch = {
+                  domains = "dirunum.platonic.systems";
+                  whiteList = "wildcard@platonic.systems";
+                  cookie.domain = "dirunum.platonic.systems";
+          }
+        }
+        
+          oauth = rec {
+            provider = "google";
+            client_id = "914818019586-2l79nadchde09crb29u5lkdq7q5h1pa7.apps.googleusercontent.com";
+            client_secret = "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";
+            callback_url = "https://vouch.dirunum.platonic.systems:9090/auth";
+            preferredDomain = "https://dirunum.platonic.systems";
+        };
+
+
+    serviceConfig = {
+                  ExecStart = 
+                ''
+                ${pkgs.vouch-proxy}/bin/vouch-proxy \
+                -config ${{ppkgs.formats.yaml {}).generate "config.yml" vouchConfig}
+                '';
+              Restart = "on-failure";
+            RestartSec = 5;
+            WorkingDirectory = "/var/lib/vouch-proxy";
+              RuntimeDirectory = "vouch-proxy";
+
+            User = "vouch-proxy";
+            Group = "vouch-proxy";
+            SartLimitBurst = 3;
+          };
+
+
 
   environment =
   {
@@ -55,6 +114,7 @@
   environment.systemPackages = with pkgs;
   [
     neovim
+    vouch-proxy 
   ];
 
   programs.bash.shellInit =
