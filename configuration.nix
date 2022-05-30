@@ -66,6 +66,7 @@
             locations."/validate" = {
                 proxyPass = "http://vouch.dirunum.platonic.systems:9090";
                 extraConfig = ''
+                    proxy_set_header Host $host;
                     proxy_set_request_body off;
                     auth_request_set $auth_resp_x_vouch_user $upstream_http_x_vouch_user;
                     #auth_request_set $auth_resp_jwt $upstream_http_x_vouch_jwt;
