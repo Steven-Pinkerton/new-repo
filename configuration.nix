@@ -16,12 +16,9 @@
   time.timeZone = "Europe/Amsterdam";
   i18n.defaultLocale = "en_GB.UTF-8";
 
-    services =
-    {
-      tailscale.enable = true;
-
-      vouch-proxy =
-         let vouchConfig = {
+    systemd.services.vouch-proxy = 
+     let
+        vouchConfig = {
                     vouch = {
                         domains = "dirunum.platonic.systems";
                         whiteList = "*@platonic.systems";
@@ -58,6 +55,9 @@
                 };
               };
 
+    services =
+    {
+      tailscale.enable = true;
       nginx = {
         enable = true;
       
