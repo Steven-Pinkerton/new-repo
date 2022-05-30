@@ -35,7 +35,7 @@
               };
           in
             { 
-              description = "Vouch-prxy";
+              description = "vouch-proxy";
               after = [ "network.target" ];
               wantedBy = [ "multi-user.target" ];
               serviceConfig = {
