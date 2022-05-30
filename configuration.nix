@@ -57,12 +57,6 @@
                     SartLimitBurst = 3;
                 };
               };
-    };
-              users.users.vouch-proxy = {
-                isSystemUser = true;
-                group = "vouch-proxy";
-        };
-      users.groups.vouch-proxy = { };
 
       nginx = {
         enable = true;
@@ -130,4 +124,11 @@
      ''
     TERM=xterm
      '';
+
+users.users.vouch-proxy = {
+                isSystemUser = true;
+                group = "vouch-proxy";
+        };
+      users.groups.vouch-proxy = { };
+
 }
