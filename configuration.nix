@@ -63,7 +63,7 @@
       
         virtualHosts."dirunum.platonic.systems" = {
 
-            location."/validate" = {
+            locations."/validate" = {
                 proxyPass = "http://vouch.dirunum.platonic.systems:9090;";
                 extraConfig = ''
                     proxy_set_request_body off;
