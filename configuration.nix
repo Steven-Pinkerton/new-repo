@@ -64,7 +64,7 @@
         virtualHosts."dirunum.platonic.systems" = {
 
             locations."/validate" = {
-                proxyPass = "http://vouch.dirunum.platonic.systems:9090;";
+                proxyPass = "http://vouch.dirunum.platonic.systems:9090";
                 extraConfig = ''
                     proxy_set_request_body off;
                     auth_request_set $auth_resp_x_vouch_user $upstream_http_x_vouch_user;
@@ -78,7 +78,7 @@
             #error_page."404" = "@error401";
 
             locations."/error401" = {
-                return = "301 https://vouch.dirunum.platonic.systems:9090/login?url=$scheme://$http_host$request_uri&lasso-failcount=$auth_resp_failcount&X-Vouch-Token=$auth_resp_jwt&error=$auth_resp_err;";
+                return = "301 https://vouch.dirunum.platonic.systems:9090/login?url=$scheme://$http_host$request_uri&lasso-failcount=$auth_resp_failcount&X-Vouch-Token=$auth_resp_jwt&error=$auth_resp_err";
             };
             };
         };
