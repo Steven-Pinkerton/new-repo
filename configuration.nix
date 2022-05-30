@@ -62,7 +62,6 @@
         enable = true;
       
         virtualHosts."dirunum.platonic.systems" = {
-            auth_request = "/validate";
 
             location."/validate" = {
                 proxyPass = "http://vouch.dirunum.platonic.systems:9090;";
