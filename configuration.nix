@@ -20,6 +20,8 @@
      let
         vouchConfig = {
                     vouch = {
+                        listen = "[::1]";
+                        port = 9090;
                         domains = "dirunum.platonic.systems";
                         whiteList = "*@platonic.systems";
                         cookie.domain = "dirunum.platonic.systems";
@@ -64,7 +66,8 @@
         virtualHosts."dirunum.platonic.systems" = {
 
             locations."/validate" = {
-                proxyPass = "http://vouch.dirunum.platonic.systems:9090";
+                #This may not be needed/changed it in line with Discourse Discussion.
+                proxyPass = "http://[::1]:${toString 9090}/"
                 extraConfig = ''
                     proxy_set_header Host $host;
                     proxy_pass_request_body off;
