@@ -67,7 +67,7 @@
 
             locations."/validate" = {
                 #This may not be needed/changed it in line with Discourse Discussion.
-                proxyPass = "http://[::1]:${toString 9090}/"
+                proxyPass = "http://[::1]:${toString 9090}/";
                 extraConfig = ''
                     proxy_set_header Host $host;
                     proxy_pass_request_body off;
