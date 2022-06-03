@@ -17,7 +17,7 @@
   i18n.defaultLocale = "en_GB.UTF-8";
 
     systemd.services.vouch-proxy = 
-     let
+    let
         vouchConfig = {
                     vouch = {
                         listen = "[::1]";
@@ -62,12 +62,11 @@
       tailscale.enable = true;
       nginx = {
         enable = true;
-      
         virtualHosts."dirunum.platonic.systems" = {
 
             locations."/validate" = {
                 #This may not be needed/changed it in line with Discourse Discussion.
-                proxyPass = "http://[::1]:${toString 9090}/";
+                proxyPass = "http://[::1]:${toString 9090}/validate";
                 extraConfig = ''
                     proxy_set_header Host $host;
                     proxy_pass_request_body off;
@@ -85,7 +84,21 @@
             locations."/error401" = {
                 return = "301 https://vouch.dirunum.platonic.systems:9090/login?url=$scheme://$http_host$request_uri&lasso-failcount=$auth_resp_failcount&X-Vouch-Token=$auth_resp_jwt&error=$auth_resp_err";
             };
+
+            locations."/" {
+              proxy_pass = "http://127.0.0.1:8080";
+              extraConfig = ''
+              proxy_set_header X-Vouch-User $auth_resp_x_vouch_user;
+              ''
+            }
             };
+
+        virtualHosts."vouch.dirunum.platonic.systems" = {
+          listen = "[::1]";
+          location."/" = {
+          proxy_pass = "http://127.0.0.1:8080";
+          }
+        }
         };
     };
 
