@@ -76,10 +76,10 @@
 
                     auth_request_set $auth_resp_jwt $upstream_http_x_vouch_jwt;
                     auth_request_set $auth_resp_err $upstream_http_x_vouch_err;
-                    auth_request_set $auth_resp_failcount $upstream_http_x_vouch_failcount;
+                    auth_request_set  $upstream_http_x_vouch_failcount;
               ''
             }
-            
+            #$auth_resp_failcount
             locations."/error401" = {
                 return = "302 https://dirunum.platonic.systems/vp_in_a_path/login?url=$scheme://$http_host$request_uri&vouch-failcount=$auth_resp_failcount&X-Vouch-Token=$auth_resp_jwt&error=$auth_resp_err";
             };
