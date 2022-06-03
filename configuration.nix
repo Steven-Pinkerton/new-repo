@@ -86,8 +86,10 @@
             };
 
             locations."/" = {
-              auth_request = "/vp_in_a_path/validate";
               proxy_pass = "http://127.0.0.1:8080";
+              extraConfig = ''
+              auth_request = "/vp_in_a_path/validate";
+              ''
             };
             };
         };
