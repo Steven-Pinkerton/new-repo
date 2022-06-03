@@ -62,43 +62,33 @@
       tailscale.enable = true;
       nginx = {
         enable = true;
+       
         virtualHosts."dirunum.platonic.systems" = {
 
-            locations."/validate" = {
-                #This may not be needed/changed it in line with Discourse Discussion.
-                proxyPass = "http://[::1]:${toString 9090}/validate";
-                extraConfig = ''
+            #This location serves all Vouch Proxy endpoints as /vp_in_a_path/$uri
+            #including /vp_in_a_path/validate, /vp_in_a_path/login, /vp_in_a_path/logout, /vp_in_a_path/auth, /vp_in_a_path/auth/$STATE, etc
+            locations."/vp_in_a_path" = {
+              proxy_pass = "http://127.0.0.1:9090";
+              extraConfig = ''
                     proxy_set_header Host $host;
                     proxy_pass_request_body off;
                     proxy_set_header Content-Length "";
-                    auth_request_set $auth_resp_x_vouch_user $upstream_http_x_vouch_user;
-                    #auth_request_set $auth_resp_jwt $upstream_http_x_vouch_jwt;
-                    #auth_request_set $auth_resp_err $upstream_http_x_vouch_err;
-                    #auth_request_set $auth_resp_failcount$upstream_http_x_vouch_failcount;
-            '';
-            };
-            
-            #This may go in the extra-config we will ask john.
-            #error_page."404" = "@error401";
 
+                    auth_request_set $auth_resp_jwt $upstream_http_x_vouch_jwt;
+                    auth_request_set $auth_resp_err $upstream_http_x_vouch_err;
+                    auth_request_set $auth_resp_failcount $upstream_http_x_vouch_failcount;
+              ''
+            }
+            
             locations."/error401" = {
-                return = "301 https://vouch.dirunum.platonic.systems:9090/login?url=$scheme://$http_host$request_uri&lasso-failcount=$auth_resp_failcount&X-Vouch-Token=$auth_resp_jwt&error=$auth_resp_err";
+                return = "302 https://dirunum.platonic.systems/vp_in_a_path/login?url=$scheme://$http_host$request_uri&vouch-failcount=$auth_resp_failcount&X-Vouch-Token=$auth_resp_jwt&error=$auth_resp_err";
             };
 
             locations."/" {
+              auth_request = "/vp_in_a_path/validate";
               proxy_pass = "http://127.0.0.1:8080";
-              extraConfig = ''
-              proxy_set_header X-Vouch-User $auth_resp_x_vouch_user;
-              ''
             }
             };
-
-        virtualHosts."vouch.dirunum.platonic.systems" = {
-          listen = "[::1]";
-          location."/" = {
-          proxy_pass = "http://127.0.0.1:8080";
-          }
-        }
         };
     };
 
