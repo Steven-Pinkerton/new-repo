@@ -85,7 +85,7 @@
                 return = "302 https://dirunum.platonic.systems/vp_in_a_path/login?url=$scheme://$http_host$request_uri&X-Vouch-Token=$auth_resp_jwt&error=$auth_resp_err";
             };
 
-            locations."/" = {
+            locations."/something" = {
               proxy_pass = "http://127.0.0.1:8080";
               extraConfig = ''
               auth_request = "/vp_in_a_path/validate";
