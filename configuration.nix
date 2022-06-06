@@ -41,8 +41,8 @@
               after = [ "network.target" ];
               wantedBy = [ "multi-user.target" ];
               serviceConfig = {
-                        ExecStart = 
-                        pkgs.lib.writeShellScript "vouch-proxy.sh" ''
+                        ExecStart = pkgs.lib.writeShellScript "vouch-proxy.sh" 
+                        ''
                       if ! [[ -d /var/lib/vouch-proxy ]]; then
                       mkdir -p /var/lib/vouch-proxy
                       fi
