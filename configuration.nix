@@ -130,8 +130,7 @@
     vouch-proxy 
   ];
 
-  networking.firewall.allowedTCPPorts = [ 8080 9090 ]
-
+  networking.firewall.allowedTCPPorts = [ 8080 9090 ];
 
   programs.bash.shellInit =
      ''
