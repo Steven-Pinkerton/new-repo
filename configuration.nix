@@ -130,6 +130,9 @@
     vouch-proxy 
   ];
 
+  networking.firewall.allowedTCPPorts = [ 8080 9090 ]
+
+
   programs.bash.shellInit =
      ''
     TERM=xterm
