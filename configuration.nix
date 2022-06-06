@@ -43,6 +43,9 @@
               serviceConfig = {
                         ExecStart = 
                       ''
+                      if ! [[ -d /var/lib/vouch-proxy ]]; then
+                      mkdir -p /var/lib/vouch-proxy
+                      fi
                       ${pkgs.vouch-proxy}/bin/vouch-proxy \
                       -config ${(pkgs.formats.yaml {}).generate "config.yml" vouchConfig}
                       '';
