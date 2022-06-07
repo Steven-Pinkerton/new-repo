@@ -43,6 +43,7 @@
               serviceConfig = {
                         ExecStart = pkgs.writeShellScript "vouch-proxy.sh" 
                         ''
+                      set -x
                       if ! [[ -d /var/lib/vouch-proxy ]]; then
                       mkdir -p /var/lib/vouch-proxy
                       fi
