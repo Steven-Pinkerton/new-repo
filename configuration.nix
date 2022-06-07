@@ -26,7 +26,6 @@
                         whiteList = "*@platonic.systems";
                         cookie.domain = "dirunum.platonic.systems";
                 };
-              };
               
                 oauth = rec {
                   provider = "google";
@@ -35,6 +34,7 @@
                   callback_url = "https://vouch.dirunum.platonic.systems:9090/auth";
                   preferredDomain = "https://dirunum.platonic.systems";
               };
+            };
           in
             { 
               description = "vouch-proxy";
