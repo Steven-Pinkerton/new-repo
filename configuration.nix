@@ -66,7 +66,7 @@
       tailscale.enable = true;
       nginx = {
         enable = true;
-       
+
         virtualHosts."dirunum.platonic.systems" = {
 
             #This location serves all Vouch Proxy endpoints as /vp_in_a_path/$uri
