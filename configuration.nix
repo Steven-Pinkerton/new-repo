@@ -20,7 +20,7 @@
     let
         vouchConfig = {
                     vouch = {
-                        listen = "0.0.0.0";
+                        listen = "127.0.0.1";
                         port = 9090;
                         domains = "dirunum.platonic.systems";
                         whiteList = "*@platonic.systems";
