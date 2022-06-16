@@ -20,7 +20,7 @@
     let
         vouchConfig = {
                     vouch = {
-                        listen = "0.0.0.0";
+                        listen = "127.0.0.1";
                         port = 9090;
                         domains = "dirunum.platonic.systems";
                         whiteList = "*@platonic.systems";
@@ -90,7 +90,7 @@
             };
 
             locations."/" = {
-              proxyPass = "http://127.0.0.1:8080";
+              proxyPass = "http://127.0.0.1:6000";
               extraConfig = ''
               auth_request /vp_in_a_path/validate;
               '';
