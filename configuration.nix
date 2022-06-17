@@ -72,7 +72,7 @@
             #This location serves all Vouch Proxy endpoints as /vp_in_a_path/$uri
             #including /vp_in_a_path/validate, /vp_in_a_path/login, /vp_in_a_path/logout, /vp_in_a_path/auth, /vp_in_a_path/auth/$STATE, etc
             locations."/vp_in_a_path" = {
-              proxyPass = "http://[::1]:9090";
+              proxyPass = "http://::1:9090";
               extraConfig = ''
                     proxy_set_header Host $host;
                     proxy_pass_request_body off;
