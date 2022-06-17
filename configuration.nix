@@ -90,7 +90,7 @@
             };
 
             locations."/" = {
-              proxyPass = "8080";
+              proxyPass = "http://127.0.0.1:8080";
               extraConfig = ''
               auth_request /vp_in_a_path/validate;
               '';
