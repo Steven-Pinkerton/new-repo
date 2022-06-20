@@ -20,6 +20,7 @@
               host = "128.199.11.198";
               sshUser = "root";
               buildOn = "remote";
+              substituteOnTarget = true; 
               hermetic = true;
             };
           }
