@@ -17,7 +17,7 @@
           {
             imports = [ "${nixpkgs}/nixos/modules/virtualisation/openstack-config.nix" ];
             _module.args.nixinate =  {
-              host = "193.16.42.17";
+              host = "128.199.11.198";
               sshUser = "root";
               buildOn = "remote";
             };
