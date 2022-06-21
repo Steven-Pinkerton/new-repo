@@ -35,66 +35,99 @@
                   preferredDomain = "https://dirunum.platonic.systems";
               };
             };
-          in
-            { 
-              description = "vouch-proxy";
-              after = [ "network.target" ];
-              wantedBy = [ "multi-user.target" ];
-              serviceConfig = {
-                      ExecStart = pkgs.writeShellScript "vouch-proxy.sh" 
-                        ''
-                      set -x
-                      if ! [[ -d /var/lib/vouch-proxy ]]; then
-                      mkdir -p /var/lib/vouch-proxy
-                      fi
-                      ${pkgs.vouch-proxy}/bin/vouch-proxy \
-                      -config ${(pkgs.formats.yaml {}).generate "config.yml" vouchConfig}
-                      '';
-                    Restart = "on-failure";
-                    RestartSec = 5;
-                    WorkingDirectory = "/var/lib/vouch-proxy";
-                    RuntimeDirectory = "vouch-proxy";
-
-                    User = "vouch-proxy";
-                    Group = "vouch-proxy";
-                    SartLimitBurst = 3;
-                };
-              };
 
     services =
     {
       tailscale.enable = true;
+
+      oauth2_proxy = {
+        enable = true;
+        provider = "google";
+        clientID = "914818019586-2l79nadchde09crb29u5lkdq7q5h1pa7.apps.googleusercontent.com";
+        clientSecret = "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";
+        addresses = "*@platonic.systems";
+        cookie = "dirunum.platonic.systems";
+        redirectURL = "https://dirunum.platonic.systems/oauth2/callback";
+        upstreams = "http://127.0.0.1:8888";
+        setXauthrequest = "true";
+        
+
+
+        #cookie_domains=[".website.com"]
+        #cookie_secure="false"
+        #cookie_samesite="lax"
+       # redirect_url="https://my.website.com/oauth2/callback"
+       # upstreams="http://127.0.0.1:8888/" # My website server
+       # set_xauthrequest=true
+       # upstreams=["file:///dev/null"]
+
+        
+      };
+
+
       nginx = {
         enable = true;
 
         virtualHosts."dirunum.platonic.systems" = {
 
-            #This location serves all Vouch Proxy endpoints as /vp_in_a_path/$uri
-            #including /vp_in_a_path/validate, /vp_in_a_path/login, /vp_in_a_path/logout, /vp_in_a_path/auth, /vp_in_a_path/auth/$STATE, etc
-            locations."/vp_in_a_path" = {
-              proxyPass = "http://127.0.0.1:9090";
+
+            locations."/oauth2/" = {
+              proxyPass = "http://127.0.0.1:4180";
               extraConfig = ''
                     proxy_set_header Host $host;
-                    proxy_pass_request_body off;
-                    proxy_set_header Content-Length "";
-
-                    auth_request_set $auth_resp_jwt $upstream_http_x_vouch_jwt;
-                    auth_request_set $auth_resp_err $upstream_http_x_vouch_err;
-              '';
-            };
-            #$auth_resp_failcount
-            #auth_request_set $upstream_http_x_vouch_failcount;
-            #vouch-failcount=$auth_resp_failcount
-            locations."/error401" = {
-                return = "302 https://dirunum.platonic.systems/vp_in_a_path/login?url=$scheme://$http_host$request_uri&X-Vouch-Token=$auth_resp_jwt&error=$auth_resp_err";
+                    proxy_set_header X-Real-Ip $remote_addr;
+                    proxy_set_header X-Scheme $scheme;
+                    proxy_set_header X-Auth-Request-Redirect "https://dirunum.platonic.systems";'' #may need $request_uri here
             };
 
-            locations."/" = {
-              proxyPass = "http://127.0.0.1:8080";
+            locations."/oauth2/auth" = {
+              proxyPass = "http://127.0.0.1:4180";
               extraConfig = ''
-              auth_request /vp_in_a_path/validate;
-              '';
+                      proxy_set_header Host             $host;
+                      proxy_set_header X-Real-IP        $remote_addr;
+                      proxy_set_header X-Scheme         $scheme;
+                      proxy_set_header Content-Length   "";
+                      proxy_pass_request_body           off;
+                  ''
             };
+            
+            locations."/" = {
+              proxyPass = "http://127.0.0.1:8888"; #website location
+              extraConfig = ''
+                    error_page 401 = /oauth2/sign_in;
+                    proxy_set_header Host             $host;
+                    proxy_set_header X-Real-IP        $remote_addr;
+                    proxy_set_header X-Scheme         $scheme;
+                    proxy_set_header Content-Length   "";
+                    proxy_pass_request_body           off;
+                    auth_request_set $token  $upstream_http_x_auth_request_access_token;
+                    proxy_set_header X-Access-Token $token;
+                    auth_request_set $auth_cookie $upstream_http_set_cookie;
+                    add_header Set-Cookie $auth_cookie;
+                    auth_request_set $auth_cookie_name_upstream_1 $upstream_cookie_auth_cookie_name_1;
+                    
+                    if ($auth_cookie ~* "(; .*)") {
+                      set $auth_cookie_name_0 $auth_cookie_name_0
+                      set $auth_cookie_name_1 "auth_cookie_name_1=$auth_cookie_name_upstream_1$1";
+                      }
+
+                    if ($auth_cookie_name_upstream_1) {
+                      add_header Set-Cookie $auth_cookie_name_0;
+                      add_header Set-Cookie $auth_cookie_name_1;
+                      }
+
+                    proxy_set_header X-Forwarded-For $remote_addr;
+                    proxy_set_header Host $http_host;
+                    '' 
+                 };
+
+
+                  #auth_request /oauth2/auth;
+                  # proxy_set_header Host $host;
+                  #proxy_set_header X-Real-IP $remote_addr;
+                  # proxy_set_header X-User $user;
+                  # auth_request_set $user   $upstream_http_x_auth_request_user;
+                  # auth_request_set $email  $upstream_http_x_auth_request_email;
             };
         };
     };
