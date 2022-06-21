@@ -50,7 +50,7 @@
         redirectURL = "https://dirunum.platonic.systems/oauth2/callback";
         upstreams = "http://127.0.0.1:8888";
         setXauthrequest = "true";
-        
+
 
 
         #cookie_domains=[".website.com"]
@@ -59,7 +59,7 @@
        # redirect_url="https://my.website.com/oauth2/callback"
        # upstreams="http://127.0.0.1:8888/" # My website server
        # set_xauthrequest=true
-       # upstreams=["file:///dev/null"]
+       # upstreams=["file:///dev/null"]  THIS HERE IS THE ONLY mysterious part left
 
         
       };
