@@ -80,7 +80,7 @@
                     proxy_set_header X-Real-Ip $remote_addr;
                     proxy_set_header X-Scheme $scheme;
                     proxy_set_header X-Auth-Request-Redirect "https://dirunum.platonic.systems";'' #may need $request_uri here
-            };
+            }
 
             locations."/oauth2/auth" = {
               proxyPass = "http://127.0.0.1:4180";
