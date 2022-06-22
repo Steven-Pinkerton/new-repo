@@ -50,9 +50,6 @@
         redirectURL = "https://dirunum.platonic.systems/oauth2/callback";     #This is the endpoint I think.
         upstreams = "http://127.0.0.1:8888";
         setXauthrequest = "true";
-
-
-
         #cookie_domains=[".website.com"]
         #cookie_secure="false"
         #cookie_samesite="lax"
@@ -60,8 +57,6 @@
        # upstreams="http://127.0.0.1:8888/" # My website server
        # set_xauthrequest=true
        # upstreams=["file:///dev/null"]  THIS HERE IS THE ONLY mysterious part left
-
-        
       };
 
 
@@ -90,7 +85,7 @@
                       proxy_set_header X-Scheme         $scheme;
                       proxy_set_header Content-Length   "";
                       proxy_pass_request_body           off;
-                  ''
+                  ;''
             };
             
             locations."/" = {
@@ -111,19 +106,16 @@
                     if ($auth_cookie ~* "(; .*)") {
                       set $auth_cookie_name_0 $auth_cookie_name_0
                       set $auth_cookie_name_1 "auth_cookie_name_1=$auth_cookie_name_upstream_1$1";
-                      };
+                      }
 
                     if ($auth_cookie_name_upstream_1) {
                       add_header Set-Cookie $auth_cookie_name_0;
                       add_header Set-Cookie $auth_cookie_name_1;
-                      };
-
+                      }
                     proxy_set_header X-Forwarded-For $remote_addr;
                     proxy_set_header Host $http_host;
                     '' 
                  };
-
-
                   #auth_request /oauth2/auth;
                   # proxy_set_header Host $host;
                   #proxy_set_header X-Real-IP $remote_addr;
