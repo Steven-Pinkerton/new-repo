@@ -74,7 +74,8 @@
                     proxy_set_header Host $host;
                     proxy_set_header X-Real-Ip $remote_addr;
                     proxy_set_header X-Scheme $scheme;
-                    proxy_set_header X-Auth-Request-Redirect "https://dirunum.platonic.systems";'' #may need $request_uri here
+                    proxy_set_header X-Auth-Request-Redirect "https://dirunum.platonic.systems"
+                    ;'' #may need $request_uri here
             };
 
             locations."/oauth2/auth" = {
