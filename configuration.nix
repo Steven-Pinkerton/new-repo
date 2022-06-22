@@ -80,7 +80,7 @@
                     proxy_set_header X-Real-Ip $remote_addr;
                     proxy_set_header X-Scheme $scheme;
                     proxy_set_header X-Auth-Request-Redirect "https://dirunum.platonic.systems";'' #may need $request_uri here
-            }
+            };
 
             locations."/oauth2/auth" = {
               proxyPass = "http://127.0.0.1:4180";
@@ -111,12 +111,12 @@
                     if ($auth_cookie ~* "(; .*)") {
                       set $auth_cookie_name_0 $auth_cookie_name_0
                       set $auth_cookie_name_1 "auth_cookie_name_1=$auth_cookie_name_upstream_1$1";
-                      }
+                      };
 
                     if ($auth_cookie_name_upstream_1) {
                       add_header Set-Cookie $auth_cookie_name_0;
                       add_header Set-Cookie $auth_cookie_name_1;
-                      }
+                      };
 
                     proxy_set_header X-Forwarded-For $remote_addr;
                     proxy_set_header Host $http_host;
