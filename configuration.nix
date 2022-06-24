@@ -15,27 +15,7 @@
 
   time.timeZone = "Europe/Amsterdam";
   i18n.defaultLocale = "en_GB.UTF-8";
-
-    systemd.services.vouch-proxy = 
-    let
-        vouchConfig = {
-                    vouch = {
-                        listen = "0.0.0.0";
-                        port = 9090;
-                        domains = "dirunum.platonic.systems";
-                        whiteList = "*@platonic.systems";
-                        cookie.domain = "dirunum.platonic.systems";
-                };
-              
-                oauth = rec {
-                  provider = "google";
-                  client_id = "914818019586-2l79nadchde09crb29u5lkdq7q5h1pa7.apps.googleusercontent.com";
-                  client_secret = "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";
-                  callback_url = "https://vouch.dirunum.platonic.systems:9090/auth";
-                  preferredDomain = "https://dirunum.platonic.systems";
-              };
-            };
-
+  
     services =
     {
       tailscale.enable = true;
