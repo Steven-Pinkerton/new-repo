@@ -156,7 +156,6 @@
   environment.systemPackages = with pkgs;
   [
     neovim
-    vouch-proxy 
   ];
 
   networking.firewall.allowedTCPPorts = [ 8080 9090 ];
@@ -165,11 +164,5 @@
      ''
     TERM=xterm
      '';
-
-users.users.vouch-proxy = {
-                isSystemUser = true;
-                group = "vouch-proxy";
-        };
-      users.groups.vouch-proxy = { };
 
 }
