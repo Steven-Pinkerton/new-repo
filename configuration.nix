@@ -72,7 +72,7 @@
                     proxy_set_header X-Real-Ip $remote_addr;
                     proxy_set_header X-Scheme $scheme;
                     proxy_set_header X-Auth-Request-Redirect "https://dirunum.platonic.systems"
-                    '' #may need $request_uri here
+                    ''; #may need $request_uri here
             };
 
             locations."/oauth2/auth" = {
@@ -83,7 +83,7 @@
                       proxy_set_header X-Scheme         $scheme;
                       proxy_set_header Content-Length   "";
                       proxy_pass_request_body           off;
-                  ''
+                  '';
             };
             
             locations."/" = {
@@ -112,7 +112,7 @@
                       }
                     proxy_set_header X-Forwarded-For $remote_addr;
                     proxy_set_header Host $http_host;
-                    '' 
+                    '';
                  };
                   #auth_request /oauth2/auth;
                   # proxy_set_header Host $host;
