@@ -82,7 +82,7 @@
                     auth_request_set $auth_cookie_name_upstream_1 $upstream_cookie_auth_cookie_name_1;
                     
                     if ($auth_cookie ~* "(; .*)") {
-                      set $auth_cookie_name_0 $auth_cookie_name_0
+                      set $auth_cookie_name_0 $auth_cookie_name_0;
                       set $auth_cookie_name_1 "auth_cookie_name_1=$auth_cookie_name_upstream_1$1";
                       }
 
