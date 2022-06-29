@@ -143,6 +143,6 @@
   programs.bash.shellInit =
      ''
     TERM=xterm
-     ''
+     '';
 
 }
