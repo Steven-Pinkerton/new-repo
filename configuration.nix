@@ -26,7 +26,7 @@
         clientID = "914818019586-2l79nadchde09crb29u5lkdq7q5h1pa7.apps.googleusercontent.com";
         clientSecret = "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";
         addresses = "*@platonic.systems";
-        cookie = { "dirunum.platonic.systems" };
+        cookie = { dirunum.platonic.systems = "dirunum.platonic.systems" };
         redirectURL = "https://dirunum.platonic.systems/oauth2/callback";     #This is the endpoint I think.
         upstreams = "http://127.0.0.1:8888";
         setXauthrequest = "true";
