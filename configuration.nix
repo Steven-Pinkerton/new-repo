@@ -46,7 +46,10 @@
       nginx = {
         enable = true;
 
+
         virtualHosts."dirunum.platonic.systems" = {
+          enableACME = true;
+          forceSSL = true;
 
             locations."/oauth2/" = {
               proxyPass = "http://127.0.0.1:4180";
