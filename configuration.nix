@@ -32,7 +32,7 @@
         };
         redirectURL = "https://dirunum.platonic.systems/oauth2/callback";     #This is the endpoint I think.
         upstream= "http://127.0.0.1:8888";
-        setXauthrequest = "true";
+        setXauthrequest = true;
         #cookie_domains=[".website.com"]
         #cookie_secure="false"
         #cookie_samesite="lax"
