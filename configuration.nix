@@ -15,100 +15,104 @@
 
   time.timeZone = "Europe/Amsterdam";
   i18n.defaultLocale = "en_GB.UTF-8";
-  
-    services =
-    {
-      tailscale.enable = true;
 
-      oauth2_proxy = {
-        enable = true;
-        provider = "google";
-        clientID = "914818019586-2l79nadchde09crb29u5lkdq7q5h1pa7.apps.googleusercontent.com";
-        clientSecret = "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";
-        email.addresses = "*@platonic.systems";
-        cookie = {
-          domain = "dirunum.platonic.systems";
-          secret = "GMM+8vzp6kIuzsq+tnxkg1qXrrzPR54wHzvLLLgP";
-        };
-        redirectURL = "https://dirunum.platonic.systems/oauth2/callback";     #This is the endpoint I think.
-        upstream= "http://127.0.0.1:8888";
-        setXauthrequest = true;
-        #cookie_domains=[".website.com"]
-        #cookie_secure="false"
-        #cookie_samesite="lax"
-       # redirect_url="https://my.website.com/oauth2/callback"
-       # upstreams="http://127.0.0.1:8888/" # My website server
-       # set_xauthrequest=true
-       # upstreams=["file:///dev/null"]  THIS HERE IS THE ONLY mysterious part left
+  security.acme.acceptTerms = true;
+  security.acme.defaults.email = "steven.a.pinkerton@platonic.systems";
+  services =
+  {
+    tailscale.enable = true;
+
+    oauth2_proxy = {
+      enable = true;
+      provider = "google";
+      clientID = "914818019586-2l79nadchde09crb29u5lkdq7q5h1pa7.apps.googleusercontent.com";
+      clientSecret = "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";
+      email.addresses = "*@platonic.systems";
+      cookie = {
+        domain = "dirunum.platonic.systems";
+        secret = "GMM+8vzp6kIuzsq+tnxkg1qXrrzPR54wHzvLLLgP";
       };
+      redirectURL = "https://dirunum.platonic.systems/oauth2/callback";     #This is the endpoint I think.
+      upstream= "http://127.0.0.1:8888";
+      setXauthrequest = true;
+      #cookie_domains=[".website.com"]
+      #cookie_secure="false"
+      #cookie_samesite="lax"
+      # redirect_url="https://my.website.com/oauth2/callback"
+      # upstreams="http://127.0.0.1:8888/" # My website server
+      # set_xauthrequest=true
+      # upstreams=["file:///dev/null"]  THIS HERE IS THE ONLY mysterious part left
+    };
 
 
-      nginx = {
-        enable = true;
+    nginx = {
+      enable = true;
 
 
-        virtualHosts."dirunum.platonic.systems" = {
-          enableACME = true;
-          forceSSL = true;
+      virtualHosts."dirunum.platonic.systems" = {
+        enableACME = true;
+        forceSSL = true;
 
-            locations."/oauth2/" = {
-              proxyPass = "http://127.0.0.1:4180";
-              extraConfig = ''
-                    proxy_set_header Host $host;
-                    proxy_set_header X-Real-Ip $remote_addr;
-                    proxy_set_header X-Scheme $scheme;
-                    proxy_set_header X-Auth-Request-Redirect "https://dirunum.platonic.systems"
-                    ''; #may need $request_uri here
-            };
+          locations."/oauth2/" = {
+            proxyPass = "http://127.0.0.1:4180";
+            extraConfig = ''
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Real-Ip $remote_addr;
+                  proxy_set_header X-Scheme $scheme;
+                  proxy_set_header X-Auth-Request-Redirect "https://dirunum.platonic.systems"
+                  ''; #may need $request_uri here
+          };
 
-            locations."/oauth2/auth" = {
-              proxyPass = "http://127.0.0.1:4180";
-              extraConfig = ''
-                      proxy_set_header Host             $host;
-                      proxy_set_header X-Real-IP        $remote_addr;
-                      proxy_set_header X-Scheme         $scheme;
-                      proxy_set_header Content-Length   "";
-                      proxy_pass_request_body           off;
-                  '';
-            };
-            
-            locations."/" = {
-              proxyPass = "http://127.0.0.1:8888"; #website location
-              extraConfig = ''
-                    error_page 401 = /oauth2/sign_in;
+          locations."/oauth2/auth" = {
+            proxyPass = "http://127.0.0.1:4180";
+            extraConfig = ''
                     proxy_set_header Host             $host;
                     proxy_set_header X-Real-IP        $remote_addr;
                     proxy_set_header X-Scheme         $scheme;
                     proxy_set_header Content-Length   "";
                     proxy_pass_request_body           off;
-                    auth_request_set $token  $upstream_http_x_auth_request_access_token;
-                    proxy_set_header X-Access-Token $token;
-                    auth_request_set $auth_cookie $upstream_http_set_cookie;
-                    add_header Set-Cookie $auth_cookie;
-                    auth_request_set $auth_cookie_name_upstream_1 $upstream_cookie_auth_cookie_name_1;
-                    
-                    if ($auth_cookie ~* "(; .*)") {
-                      set $auth_cookie_name_0 $auth_cookie_name_0;
-                      set $auth_cookie_name_1 "auth_cookie_name_1=$auth_cookie_name_upstream_1$1";
-                      }
+                '';
+          };
+          
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:8888"; #website location
+            extraConfig = ''
+                  error_page 401 = /oauth2/sign_in;
+                  proxy_set_header Host             $host;
+                  proxy_set_header X-Real-IP        $remote_addr;
+                  proxy_set_header X-Scheme         $scheme;
+                  proxy_set_header Content-Length   "";
+                  proxy_pass_request_body           off;
+                  auth_request_set $token  $upstream_http_x_auth_request_access_token;
+                  proxy_set_header X-Access-Token $token;
+                  auth_request_set $auth_cookie $upstream_http_set_cookie;
+                  add_header Set-Cookie $auth_cookie;
+                  auth_request_set $auth_cookie_name_upstream_1 $upstream_cookie_auth_cookie_name_1;
+                  
+                  if ($auth_cookie ~* "(; .*)") {
+                    set $auth_cookie_name_0 $auth_cookie_name_0;
+                    set $auth_cookie_name_1 "auth_cookie_name_1=$auth_cookie_name_upstream_1$1";
+                   }
+                  if ($auth_cookie_name_upstream_1) {
+                    add_header Set-Cookie $auth_cookie_name_0;
+                    add_header Set-Cookie $auth_cookie_name_1;
+                    }
 
-                    if ($auth_cookie_name_upstream_1) {
-                      add_header Set-Cookie $auth_cookie_name_0;
-                      add_header Set-Cookie $auth_cookie_name_1;
-                      }
-                    proxy_set_header X-Forwarded-For $remote_addr;
-                    proxy_set_header Host $http_host;
-                    '';
-                 };
-                  #auth_request /oauth2/auth;
-                  # proxy_set_header Host $host;
-                  #proxy_set_header X-Real-IP $remote_addr;
-                  # proxy_set_header X-User $user;
-                  # auth_request_set $user   $upstream_http_x_auth_request_user;
-                  # auth_request_set $email  $upstream_http_x_auth_request_email;
-            };
-        };
+                  proxy_set_header X-Forwarded-For $remote_addr;
+                  # This line is error
+                  #proxy_set_header Host $http_host;
+                  '';
+               };
+          #      #auth_request /oauth2/auth;
+          #      # proxy_set_header Host $host;
+          #      #proxy_set_header X-Real-IP $remote_addr;
+          #      # proxy_set_header X-User $user;
+          #      # auth_request_set $user   $upstream_http_x_auth_request_user;
+          #      # auth_request_set $email  $upstream_http_x_auth_request_email;
+          #};
+      };
     };
+  };
 
   environment =
   {
