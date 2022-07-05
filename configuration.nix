@@ -109,7 +109,7 @@
           #      # proxy_set_header X-User $user;
           #      # auth_request_set $user   $upstream_http_x_auth_request_user;
           #      # auth_request_set $email  $upstream_http_x_auth_request_email;
-          #};
+          #;
       };
     };
   };
