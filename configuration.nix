@@ -30,7 +30,7 @@
       email.addresses = "*@platonic.systems";
       cookie = {
         domain = "diurnum.platonic.systems";
-        secret = "GMM+8vzp6kIuzsq+tnxkg1qXrrzPR54wHzvLLLgP";
+        secret = "zEPbQ6FNd7aCFcjBN5t3hfiJDjWFTuClIxpK1K_xjco";
       };
       redirectURL = "https://diurnum.platonic.systems/oauth2/callback";     #This is the endpoint I think.
       upstream= "http://127.0.0.1:8888";
