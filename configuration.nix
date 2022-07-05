@@ -32,7 +32,7 @@
         domain = "dirunum.platonic.systems";
         secret = "GMM+8vzp6kIuzsq+tnxkg1qXrrzPR54wHzvLLLgP";
       };
-      redirectURL = "https://dirunum.platonic.systems/oauth2/callback";     #This is the endpoint I think.
+      redirectURL = "https://diurnum.platonic.systems/oauth2/callback";     #This is the endpoint I think.
       upstream= "http://127.0.0.1:8888";
       setXauthrequest = true;
       #cookie_domains=[".website.com"]
@@ -49,7 +49,7 @@
       enable = true;
 
 
-      virtualHosts."dirunum.platonic.systems" = {
+      virtualHosts."diurnum.platonic.systems" = {
         enableACME = true;
         forceSSL = true;
 
@@ -59,7 +59,7 @@
                   proxy_set_header Host $host;
                   proxy_set_header X-Real-Ip $remote_addr;
                   proxy_set_header X-Scheme $scheme;
-                  proxy_set_header X-Auth-Request-Redirect "https://dirunum.platonic.systems"
+                  proxy_set_header X-Auth-Request-Redirect "https://diurnum.platonic.systems"
                   ''; #may need $request_uri here
           };
 
