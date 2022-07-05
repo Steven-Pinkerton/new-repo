@@ -29,7 +29,7 @@
       clientSecret = "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";
       email.addresses = "*@platonic.systems";
       cookie = {
-        domain = "dirunum.platonic.systems";
+        domain = "diurnum.platonic.systems";
         secret = "GMM+8vzp6kIuzsq+tnxkg1qXrrzPR54wHzvLLLgP";
       };
       redirectURL = "https://diurnum.platonic.systems/oauth2/callback";     #This is the endpoint I think.
