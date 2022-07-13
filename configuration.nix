@@ -149,9 +149,7 @@
 
   users.users.root =
   {
-    isNormalUser = true;
-    initialHashedPassword = "test";
-    extraGroups = [ "wheel" ];
+    
     openssh.authorizedKeys.keys = [
      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDeppey98/6oV5sXi/fy8fqxlc+tyYQlxiuVOhx8IcvZ Chloe Kever (git.platonic.systems)"
      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILMaYwUX4MK8kWv0EW0ALvNMDAgIMvaLehvTSN28gf4R Chloe Kever (git.platonic.systems)"
