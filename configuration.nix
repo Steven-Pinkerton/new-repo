@@ -164,7 +164,7 @@
     neovim
   ];
 
-  networking.firewall.allowedTCPPorts = [ 8080 9090 ];
+  networking.firewall.allowedTCPPorts = [ 8080 9090 443 80 ];
 
   programs.bash.shellInit =
      ''
